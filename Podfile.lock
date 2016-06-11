@@ -1,10 +1,13 @@
 PODS:
   - Alamofire (3.4.0)
+  - SWXMLHash (2.3.1)
 
 DEPENDENCIES:
   - Alamofire
+  - SWXMLHash
 
 SPEC CHECKSUMS:
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  SWXMLHash: 795c66e74f4cc9473ad6465c6653c5a6f59f417e
 
 COCOAPODS: 0.39.0

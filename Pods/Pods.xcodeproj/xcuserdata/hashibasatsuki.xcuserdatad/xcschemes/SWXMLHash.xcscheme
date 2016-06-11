@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EB5274C5D35BCCA537A58131'
-               BlueprintName = 'Pods-SunsetAlert'
+               BlueprintIdentifier = '18214075C5E532CB03BE4936'
+               BlueprintName = 'SWXMLHash'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_SunsetAlert.framework'>
+               BuildableName = 'SWXMLHash.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

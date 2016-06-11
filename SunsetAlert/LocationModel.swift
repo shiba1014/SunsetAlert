@@ -13,16 +13,23 @@ class LocationModel:NSObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!
     
+//    override init() {
+//        locationManager.delegate = self
+//    }
+    
     func getLocation() {
         
         locationManager = CLLocationManager()
+        
         locationManager.delegate = self
         
         let status = CLLocationManager.authorizationStatus()
-        if(status == CLAuthorizationStatus.NotDetermined) {
+        if (status == CLAuthorizationStatus.NotDetermined) {
             print("didChangeAuthorizationStatus:\(status)");
             locationManager.requestAlwaysAuthorization()
         }
+        
+        print(status.rawValue)
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 100
