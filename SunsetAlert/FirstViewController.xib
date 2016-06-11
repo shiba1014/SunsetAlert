@@ -9,6 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FirstViewController" customModule="SunsetAlert" customModuleProvider="target">
             <connections>
+                <outlet property="locationLabel" destination="YLK-sg-ksP" id="liB-fG-M1M"/>
+                <outlet property="sunsetTimeLabel" destination="dSF-6Z-wN9" id="5t9-GB-ZgZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  LocationModel.swift
 //  SunsetAlert
 //
 //  Created by Paul McCartney on 2016/06/11.
@@ -8,28 +8,11 @@
 
 import UIKit
 import CoreLocation
-import Alamofire
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate{
-
-    @IBOutlet var locationLabel: UILabel!
-    @IBOutlet var sunsetTimeLabel: UILabel!
+class LocationModel:NSObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        //LocationModel().getLocation()
-        self.getLocation()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func getLocation() {
         
         locationManager = CLLocationManager()
@@ -54,5 +37,4 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate{
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error)
     }
-
 }
