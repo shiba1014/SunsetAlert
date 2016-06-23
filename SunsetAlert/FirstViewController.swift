@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SWXMLHash
+import Photos
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
@@ -150,4 +151,34 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
             self.presentViewController(controller, animated: true, completion: nil)
         }
     }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let url:NSURL = info[UIImagePickerControllerOriginalImage] as! NSURL
+        let fetchResult = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
+        let asset: PHAsset = fetchResult.firstObject as! PHAsset
+        
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .HighQualityFormat
+        options.resizeMode = .Exact
+        
+        PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(CGFloat(asset.pixelWidth),CGFloat(asset.pixelHeight)), contentMode: .AspectFill, options: options) { (result: UIImage?, info: [NSObject : AnyObject]?) -> Void in
+            let isDegraded:Bool  = info![PHImageResultIsDegradedKey] as! Bool
+            if(!isDegraded){
+                let now:NSDate = NSDate()
+                let df:NSDateFormatter = NSDateFormatter()
+                df.dateFormat = "yyyyMMddHHmmSS"
+                
+                let fileName = "/" + df.stringFromDate(now) + ".jpg"
+                
+                //　ファイルのパス
+                let documentRoot = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                let filePath = documentRoot.stringByAppendingString(fileName)
+                let myfile:NSData = UIImageJPEGRepresentation(result!, 0.5)!
+                myfile.writeToFile(filePath, atomically: true)
+                
+            }
+        }
+        
+    }
+    
 }
