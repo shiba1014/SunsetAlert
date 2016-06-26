@@ -34,9 +34,9 @@ class MyPhotosViewController: UIViewController,UINavigationControllerDelegate,UI
         collectionView.delegate = self
         collectionView.dataSource = self
         self.view.addSubview(collectionView)
-        
-        let backButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(self.back))
-        self.navigationItem.leftBarButtonItem = backButton
+
+        let closeButton = UIBarButtonItem(image: UIImage.init(named: "closeButton"), style: .Plain, target: self, action: #selector(self.back))
+        self.navigationItem.rightBarButtonItem = closeButton
         
         ResourceModel.sharedInstance.updateResource()
         self.resources = ResourceModel.sharedInstance.getResources()

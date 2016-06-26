@@ -23,9 +23,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.getLocation()
+        
         sunsetTimeLabel.text = "Loading..."
         locationLabel.text = "-----"
-        self.getLocation()
     }
 
     override func didReceiveMemoryWarning() {

@@ -47,7 +47,7 @@
                         <constraint firstAttribute="width" secondItem="9vI-eV-fhO" secondAttribute="height" multiplier="1:1" id="ZLc-Zg-a1G"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
-                    <state key="normal" title="自分の夕焼け">
+                    <state key="normal" title="夕焼けアルバム">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="default">
