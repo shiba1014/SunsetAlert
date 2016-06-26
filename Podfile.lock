@@ -1,13 +1,26 @@
 PODS:
-  - Alamofire (3.4.0)
-  - SWXMLHash (2.3.1)
+  - Alamofire (3.4.1)
+  - Realm (1.0.1):
+    - Realm/Headers (= 1.0.1)
+  - Realm/Headers (1.0.1)
+  - RealmSwift (1.0.1):
+    - Realm (= 1.0.1)
+  - SKPhotoBrowser (2.0.0)
+  - SWXMLHash (2.3.2)
 
 DEPENDENCIES:
   - Alamofire
+  - RealmSwift
+  - SKPhotoBrowser
   - SWXMLHash
 
 SPEC CHECKSUMS:
-  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
-  SWXMLHash: 795c66e74f4cc9473ad6465c6653c5a6f59f417e
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
+  RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
+  SKPhotoBrowser: 6a4ef17ea9e4e7358df29c2e552d9f33657dcd8a
+  SWXMLHash: 2f8c49af765718ad56020c4f875ec3ff22612f06
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: b113c7b116b21d35d3bff5efb510f950f07dad68
+
+COCOAPODS: 1.0.1

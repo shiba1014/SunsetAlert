@@ -23,6 +23,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        sunsetTimeLabel.text = "Loading..."
+        locationLabel.text = "-----"
         self.getLocation()
     }
 
@@ -38,7 +40,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         
         let status = CLLocationManager.authorizationStatus()
         if(status == CLAuthorizationStatus.NotDetermined) {
-            print("didChangeAuthorizationStatus:\(status)");
             locationManager.requestAlwaysAuthorization()
         }
         
@@ -50,10 +51,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("緯度：\(manager.location?.coordinate.latitude)")
-        print("経度：\(manager.location?.coordinate.longitude)")
-        self.getSunsetTime((manager.location?.coordinate.latitude)!, lng: (manager.location?.coordinate.longitude)!)
+//        print("緯度：\(manager.location?.coordinate.latitude)")
+//        print("経度：\(manager.location?.coordinate.longitude)")
         self.revGeocoding((manager.location)!)
+        self.getSunsetTime((manager.location?.coordinate.latitude)!, lng: (manager.location?.coordinate.longitude)!)
         
         manager.stopUpdatingLocation()
     }
@@ -68,14 +69,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         let comp = calendar.components([.Year,.Month,.Day], fromDate: now)
 
         let url = "http://labs.bitmeister.jp/ohakon/api/?mode=sun_moon_rise_set&year=\(comp.year)&month=\(comp.month)&day=\(comp.day)&lat=\(lat)&lng=\(lng)"
-        print(url)
+        
         Alamofire.request(.POST, url)
             .response{ (request, response, data, error) in
-                print(data)
                 let xml = SWXMLHash.parse(data!)
                 let sunsetTime = xml["result"]["rise_and_set"]["sunset_hm"].element?.text
-                //TODO:xmlから取得できなくなった
-                print("sunsetTimme:\(sunsetTime)")
                 self.sunsetTimeLabel.text = sunsetTime
                 self.getDateFromString(sunsetTime,year: comp.year,month: comp.month,day: comp.day)
                 if (error != nil) {
@@ -98,13 +96,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if (error == nil && placemarks!.count > 0) {
                 let placemark = placemarks![0] as CLPlacemark
-                print("Country = \(placemark.country)")
-                print("Postal Code = \(placemark.postalCode)")
-                print("Administrative Area = \(placemark.administrativeArea)")
-                print("Sub Administrative Area = \(placemark.subAdministrativeArea)")
-                print("Locality = \(placemark.locality)")
-                print("Sub Locality = \(placemark.subLocality)")
-                print("Throughfare = \(placemark.thoroughfare)")
+//                print("Country = \(placemark.country)")
+//                print("Postal Code = \(placemark.postalCode)")
+//                print("Administrative Area = \(placemark.administrativeArea)")
+//                print("Sub Administrative Area = \(placemark.subAdministrativeArea)")
+//                print("Locality = \(placemark.locality)")
+//                print("Sub Locality = \(placemark.subLocality)")
+//                print("Throughfare = \(placemark.thoroughfare)")
                 
                 if let area = placemark.administrativeArea, locality = placemark.locality {
                         self.locationLabel.text = "\(area)\(locality)"
@@ -153,32 +151,75 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let url:NSURL = info[UIImagePickerControllerOriginalImage] as! NSURL
-        let fetchResult = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
-        let asset: PHAsset = fetchResult.firstObject as! PHAsset
-        
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .HighQualityFormat
-        options.resizeMode = .Exact
-        
-        PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(CGFloat(asset.pixelWidth),CGFloat(asset.pixelHeight)), contentMode: .AspectFill, options: options) { (result: UIImage?, info: [NSObject : AnyObject]?) -> Void in
-            let isDegraded:Bool  = info![PHImageResultIsDegradedKey] as! Bool
-            if(!isDegraded){
-                let now:NSDate = NSDate()
-                let df:NSDateFormatter = NSDateFormatter()
-                df.dateFormat = "yyyyMMddHHmmSS"
+        if(info[UIImagePickerControllerOriginalImage] != nil){
+            
+            var url: NSURL = NSURL()
+            
+            if info[UIImagePickerControllerReferenceURL] != nil {
+                //ライブラリからsenntaku
+                url = info[UIImagePickerControllerReferenceURL] as! NSURL
+                let fetchResult = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
+                if (fetchResult.count != 0) {
+                    let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                    
+                    let options = PHImageRequestOptions()
+                    options.deliveryMode = .HighQualityFormat
+                    options.resizeMode = .Exact
+                    
+                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(CGFloat(asset.pixelWidth),CGFloat(asset.pixelHeight)), contentMode: .AspectFill, options: options) { (result: UIImage?, info: [NSObject : AnyObject]?) -> Void in
+                        let isDegraded:Bool  = info![PHImageResultIsDegradedKey] as! Bool
+                        if(!isDegraded){
+                            FileManager.saveImagePath(result!,createdDate: asset.creationDate!)
+                        }
+                    }
+                    
+                    picker.dismissViewControllerAnimated(true, completion: nil)
+                    
+                } else {
+                    //フォトストリーム上の写真を選択
+                    picker.dismissViewControllerAnimated(true, completion: {
+                        let alert:UIAlertController = UIAlertController(title: "Sorry...", message: "フォトストリーム上の写真はアップロードできません", preferredStyle: .Alert)
+                        let action:UIAlertAction = UIAlertAction(title: "しょうがない", style: .Default, handler:nil)
+                        alert.addAction(action)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
+                }
+            } else {
+                //カメラで撮影
+                let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+                UIImageWriteToSavedPhotosAlbum(image, self, #selector(FirstViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
                 
-                let fileName = "/" + df.stringFromDate(now) + ".jpg"
-                
-                //　ファイルのパス
-                let documentRoot = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-                let filePath = documentRoot.stringByAppendingString(fileName)
-                let myfile:NSData = UIImageJPEGRepresentation(result!, 0.5)!
-                myfile.writeToFile(filePath, atomically: true)
-                
+                picker.dismissViewControllerAnimated(true, completion: nil)
             }
         }
-        
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [
+            NSSortDescriptor(key: "creationDate", ascending: false)
+        ]
+        options.fetchLimit = 1
+        let assets: PHFetchResult = PHAsset.fetchAssetsWithMediaType(.Image, options: options)
+        assets.enumerateObjectsUsingBlock { (asset, index, stop) -> Void in
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .HighQualityFormat
+            options.resizeMode = .Exact
+            
+            PHImageManager.defaultManager().requestImageForAsset(asset as! PHAsset, targetSize: CGSizeMake(CGFloat(asset.pixelWidth),CGFloat(asset.pixelHeight)), contentMode: .AspectFill, options: options) { (result: UIImage?, info: [NSObject : AnyObject]?) -> Void in
+                let isDegraded:Bool = info![PHImageResultIsDegradedKey] as! Bool
+                if(!isDegraded){
+                    FileManager.saveImagePath(result!,createdDate: asset.creationDate!!)
+                }
+            }
+        }
+    }
+
+    
+    @IBAction func tappedMyPhotos() {
+        let vc = MyPhotosViewController()
+        let navi = UINavigationController(rootViewController: vc)
+        self.presentViewController(navi, animated: true, completion: nil)
     }
     
 }
