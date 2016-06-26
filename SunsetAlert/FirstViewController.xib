@@ -20,14 +20,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日の日の入り" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaW-dI-bZF">
-                    <rect key="frame" x="148" y="155" width="119" height="21"/>
+                    <rect key="frame" x="148" y="141" width="119" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSF-6Z-wN9">
-                    <rect key="frame" x="133" y="246" width="149" height="66"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="55"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -70,18 +64,15 @@
                         <action selector="tappedMyPhotos" destination="-1" eventType="touchUpInside" id="f7h-c5-Wap"/>
                     </connections>
                 </button>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buY-la-Lln">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="lvH-Zz-mS6"/>
-                    </constraints>
-                    <items>
-                        <navigationItem title="Title" id="08W-Bh-tJt"/>
-                    </items>
-                </navigationBar>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都江東区" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLK-sg-ksP">
-                    <rect key="frame" x="156" y="114" width="102" height="21"/>
+                    <rect key="frame" x="156" y="100" width="102" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSF-6Z-wN9">
+                    <rect key="frame" x="133" y="232" width="149" height="66"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="55"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -89,8 +80,6 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="mOn-1j-jAq" firstAttribute="top" secondItem="9vI-eV-fhO" secondAttribute="bottom" constant="10" id="2Hh-Z5-jnB"/>
-                <constraint firstItem="YLK-sg-ksP" firstAttribute="top" secondItem="buY-la-Lln" secondAttribute="bottom" constant="70" id="4qf-LH-CoS"/>
-                <constraint firstItem="buY-la-Lln" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Pk-aF-EBC"/>
                 <constraint firstItem="dSF-6Z-wN9" firstAttribute="top" secondItem="UaW-dI-bZF" secondAttribute="bottom" constant="70" id="A43-NI-F8z"/>
                 <constraint firstItem="qZr-wZ-QqN" firstAttribute="width" secondItem="9vI-eV-fhO" secondAttribute="width" id="B3e-mN-SGO"/>
                 <constraint firstAttribute="bottom" secondItem="mOn-1j-jAq" secondAttribute="bottom" constant="30" id="CEv-BV-sSu"/>
@@ -103,10 +92,9 @@
                 <constraint firstItem="qZr-wZ-QqN" firstAttribute="leading" secondItem="9vI-eV-fhO" secondAttribute="trailing" constant="10" id="M8U-tG-wHP"/>
                 <constraint firstItem="UaW-dI-bZF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="cB8-9W-vaF"/>
                 <constraint firstItem="mOn-1j-jAq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="eub-Sh-hLI"/>
-                <constraint firstAttribute="trailing" secondItem="buY-la-Lln" secondAttribute="trailing" id="gFb-Sh-FUV"/>
                 <constraint firstItem="9vI-eV-fhO" firstAttribute="width" secondItem="mOn-1j-jAq" secondAttribute="width" multiplier="0.47" id="oYs-cx-bp4"/>
+                <constraint firstItem="YLK-sg-ksP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="pBi-UA-79m"/>
                 <constraint firstItem="qZr-wZ-QqN" firstAttribute="centerY" secondItem="9vI-eV-fhO" secondAttribute="centerY" id="xhe-aO-5sf"/>
-                <constraint firstItem="buY-la-Lln" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="z3b-Va-q0n"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
             <variation key="default">

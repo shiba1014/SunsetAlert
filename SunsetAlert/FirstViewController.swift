@@ -156,7 +156,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
             var url: NSURL = NSURL()
             
             if info[UIImagePickerControllerReferenceURL] != nil {
-                //ライブラリからsenntaku
+                //ライブラリから洗濯
                 url = info[UIImagePickerControllerReferenceURL] as! NSURL
                 let fetchResult = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
                 if (fetchResult.count != 0) {

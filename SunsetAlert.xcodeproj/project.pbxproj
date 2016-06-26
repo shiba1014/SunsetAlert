@@ -22,6 +22,10 @@
 		4E9A48EE1D0BD8E8002126E4 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E9A48EC1D0BD8E8002126E4 /* FirstViewController.xib */; };
 		4E9A48F61D0BE9F0002126E4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9A48F51D0BE9F0002126E4 /* CoreLocation.framework */; };
 		4E9B4BC51D150A740049D4EE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9B4BC41D150A740049D4EE /* MapKit.framework */; };
+		52232EDC1D201A2000D8E52D /* ios in Resources */ = {isa = PBXBuildFile; fileRef = 52232EDB1D201A2000D8E52D /* ios */; };
+		52232EE41D201A9100D8E52D /* gradation.png in Resources */ = {isa = PBXBuildFile; fileRef = 52232EE01D201A9100D8E52D /* gradation.png */; };
+		52232EE61D201A9100D8E52D /* SunsetAlert_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 52232EE21D201A9100D8E52D /* SunsetAlert_logo.png */; };
+		52232EE71D201A9100D8E52D /* SunsetAlert_not_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 52232EE31D201A9100D8E52D /* SunsetAlert_not_logo.png */; };
 		72FDE529E65DA615261B8DB7 /* Pods_SunsetAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98558D8189509D71EA356BEF /* Pods_SunsetAlert.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,10 @@
 		4E9A48EC1D0BD8E8002126E4 /* FirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
 		4E9A48F51D0BE9F0002126E4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		4E9B4BC41D150A740049D4EE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		52232EDB1D201A2000D8E52D /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ios; sourceTree = "<group>"; };
+		52232EE01D201A9100D8E52D /* gradation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradation.png; sourceTree = "<group>"; };
+		52232EE21D201A9100D8E52D /* SunsetAlert_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SunsetAlert_logo.png; sourceTree = "<group>"; };
+		52232EE31D201A9100D8E52D /* SunsetAlert_not_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SunsetAlert_not_logo.png; sourceTree = "<group>"; };
 		59C3C0B4DBF605D45EF26912 /* Pods-SunsetAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SunsetAlert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SunsetAlert/Pods-SunsetAlert.debug.xcconfig"; sourceTree = "<group>"; };
 		98558D8189509D71EA356BEF /* Pods_SunsetAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SunsetAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0170E3EDEC50D4EE76BECD8 /* Pods-SunsetAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SunsetAlert.release.xcconfig"; path = "Pods/Target Support Files/Pods-SunsetAlert/Pods-SunsetAlert.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 				4E3C89501D1CC62D00211418 /* ResourceModel.swift */,
 				4E3C89521D1CC65500211418 /* Resource.swift */,
 				4E5017131D1CEDAC001262CC /* CollectionViewCell.swift */,
+				52232EDD1D201A6400D8E52D /* Resources */,
 			);
 			path = SunsetAlert;
 			sourceTree = "<group>";
@@ -164,6 +173,17 @@
 				4E9A48DF1D0BD89C002126E4 /* Info.plist */,
 			);
 			path = SunsetAlertUITests;
+			sourceTree = "<group>";
+		};
+		52232EDD1D201A6400D8E52D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				52232EE01D201A9100D8E52D /* gradation.png */,
+				52232EE21D201A9100D8E52D /* SunsetAlert_logo.png */,
+				52232EE31D201A9100D8E52D /* SunsetAlert_not_logo.png */,
+				52232EDB1D201A2000D8E52D /* ios */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		7C332045A256A742689C91FB /* Frameworks */ = {
@@ -289,9 +309,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E9A48C81D0BD89C002126E4 /* LaunchScreen.storyboard in Resources */,
+				52232EE71D201A9100D8E52D /* SunsetAlert_not_logo.png in Resources */,
+				52232EE61D201A9100D8E52D /* SunsetAlert_logo.png in Resources */,
+				52232EE41D201A9100D8E52D /* gradation.png in Resources */,
 				4E9A48C51D0BD89C002126E4 /* Assets.xcassets in Resources */,
 				4E9A48C31D0BD89C002126E4 /* Main.storyboard in Resources */,
 				4E9A48EE1D0BD8E8002126E4 /* FirstViewController.xib in Resources */,
+				52232EDC1D201A2000D8E52D /* ios in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

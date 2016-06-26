@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,7 +18,27 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradation.png" translatesAutoresizingMaskIntoConstraints="NO" id="QaY-Hs-N0U">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SunsetAlert_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="vep-ot-XFk">
+                                <rect key="frame" x="200" y="200" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="E5Z-3F-UbH"/>
+                                    <constraint firstAttribute="width" secondItem="vep-ot-XFk" secondAttribute="height" multiplier="1:1" id="bqb-hL-t4a"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="QaY-Hs-N0U" secondAttribute="trailing" constant="-20" id="0Mg-ak-KK5"/>
+                            <constraint firstItem="QaY-Hs-N0U" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="4a8-CL-GoD"/>
+                            <constraint firstItem="QaY-Hs-N0U" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="E6P-xR-GDX"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="QaY-Hs-N0U" secondAttribute="bottom" id="HiR-NB-X6E"/>
+                            <constraint firstItem="vep-ot-XFk" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ONh-zj-1G3"/>
+                            <constraint firstItem="vep-ot-XFk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="raQ-Cf-LIQ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +46,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="SunsetAlert_logo.png" width="400" height="400"/>
+        <image name="gradation.png" width="1024" height="1024"/>
+    </resources>
 </document>
