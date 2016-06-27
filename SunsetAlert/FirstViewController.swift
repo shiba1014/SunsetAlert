@@ -16,6 +16,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
 
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var sunsetTimeLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    
+    var lat: Double = 0
+    var lng: Double = 0
+    
     
     var locationManager: CLLocationManager!
     
@@ -27,6 +32,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         
         sunsetTimeLabel.text = "Loading..."
         locationLabel.text = "-----"
+        dateLabel.text = "今日の日の入り時刻"
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +61,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
 //        print("緯度：\(manager.location?.coordinate.latitude)")
 //        print("経度：\(manager.location?.coordinate.longitude)")
         self.revGeocoding((manager.location)!)
-        self.getSunsetTime((manager.location?.coordinate.latitude)!, lng: (manager.location?.coordinate.longitude)!)
+        lat = (manager.location?.coordinate.latitude)!
+        lng = (manager.location?.coordinate.longitude)!
+        self.getSunsetTimeAt(NSDate())
         
         manager.stopUpdatingLocation()
     }
@@ -64,10 +72,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         print(error)
     }
     
-    func getSunsetTime(lat:Double, lng:Double) {
-        let now = NSDate()
+    func getSunsetTimeAt(date:NSDate) {
+        
         let calendar = NSCalendar.currentCalendar()
-        let comp = calendar.components([.Year,.Month,.Day], fromDate: now)
+        let comp = calendar.components([.Year,.Month,.Day], fromDate: date)
 
         let url = "http://labs.bitmeister.jp/ohakon/api/?mode=sun_moon_rise_set&year=\(comp.year)&month=\(comp.month)&day=\(comp.day)&lat=\(lat)&lng=\(lng)"
         
@@ -87,7 +95,20 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd-HH:mm"
         let date = dateFormatter.dateFromString("\(year)/\(month)/\(day)-\(dateString)")
-        print(date)
+        let result = date?.compare(NSDate())
+        if(result == NSComparisonResult.OrderedAscending){
+            //日の入り時刻が過ぎていたら翌日の日の入りを取得
+            dateLabel.text = "明日の日の入り時刻"
+            let calendar = NSCalendar.currentCalendar()
+            let tommorow = calendar.dateByAddingUnit(.Day, value: 1, toDate: NSDate(), options: NSCalendarOptions())
+            let flag: NSCalendarUnit = [ .Year, .Month, .Day]
+            let comp: NSDateComponents = calendar.components(flag, fromDate: tommorow!)
+            let zero = calendar.dateFromComponents(comp)
+            self.getSunsetTimeAt(zero!)
+        } else {
+            //日の入りがまだだったら通知を設定
+            
+        }
     }
     
     func revGeocoding(location: CLLocation)
