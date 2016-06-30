@@ -19,6 +19,7 @@ class MyPhotosViewController: UIViewController,UINavigationControllerDelegate,UI
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.title = "夕焼けアルバム"
         
         ResourceModel.sharedInstance.addObserver(self, forKeyPath: "resources", options: [.New], context: nil)
         

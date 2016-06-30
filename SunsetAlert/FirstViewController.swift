@@ -28,13 +28,20 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getLocation()
         
         sunsetTimeLabel.text = "Loading..."
         locationLabel.text = "-----"
         dateLabel.text = "今日の日の入り時刻"
+        
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.viewController = self
+        
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        self.getLocation()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -48,24 +55,41 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         let status = CLLocationManager.authorizationStatus()
         if(status == CLAuthorizationStatus.NotDetermined) {
             locationManager.requestAlwaysAuthorization()
+        } else if(status == CLAuthorizationStatus.Denied){
+            //設定画面へ
+            let alert = UIAlertController(title: nil, message: "位置情報を許可してください", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "設定画面へ", style: .Default, handler: { action in
+                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            })
+            let cancelAction = UIAlertAction(title: "キャンセル", style: .Default, handler: nil)
+//            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 100
+//        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        locationManager.distanceFilter = 10000
 //        locationManager.startUpdatingLocation()
-        locationManager.requestLocation()
+//        locationManager.requestLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
+        
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("updated!")
 //        print("緯度：\(manager.location?.coordinate.latitude)")
 //        print("経度：\(manager.location?.coordinate.longitude)")
         self.revGeocoding((manager.location)!)
         lat = (manager.location?.coordinate.latitude)!
         lng = (manager.location?.coordinate.longitude)!
         self.getSunsetTimeAt(NSDate())
-        
-        manager.stopUpdatingLocation()
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -76,7 +100,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
         
         let calendar = NSCalendar.currentCalendar()
         let comp = calendar.components([.Year,.Month,.Day], fromDate: date)
-
         let url = "http://labs.bitmeister.jp/ohakon/api/?mode=sun_moon_rise_set&year=\(comp.year)&month=\(comp.month)&day=\(comp.day)&lat=\(lat)&lng=\(lng)"
         
         Alamofire.request(.POST, url)
@@ -92,14 +115,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
     }
     
     func getDateFromString(dateString: String!,year: Int!,month: Int!,day: Int!){
+        if(dateString == nil){
+            return;
+        }
         let dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd-HH:mm"
+        dateFormatter.dateFormat = "yyyy/MM/dd-HH:m"
         let date = dateFormatter.dateFromString("\(year)/\(month)/\(day)-\(dateString)")
         let result = date?.compare(NSDate())
+        let calendar = NSCalendar.currentCalendar()
         if(result == NSComparisonResult.OrderedAscending){
             //日の入り時刻が過ぎていたら翌日の日の入りを取得
             dateLabel.text = "明日の日の入り時刻"
-            let calendar = NSCalendar.currentCalendar()
             let tommorow = calendar.dateByAddingUnit(.Day, value: 1, toDate: NSDate(), options: NSCalendarOptions())
             let flag: NSCalendarUnit = [ .Year, .Month, .Day]
             let comp: NSDateComponents = calendar.components(flag, fromDate: tommorow!)
@@ -107,8 +133,38 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIImageP
             self.getSunsetTimeAt(zero!)
         } else {
             //日の入りがまだだったら通知を設定
-            
+            let ud = NSUserDefaults.standardUserDefaults()
+            print(ud.stringForKey("notifSetDate"))
+            print("\(year)/\(month)/\(day)-\(dateString)")
+            if(ud.stringForKey("notifSetDate") == "\(year)/\(month)/\(day)-\(dateString)"){
+                print("hasSetNotification")
+                return
+            }
+            self.setLocalNotif(date!)
         }
+    }
+    
+    func setLocalNotif(sunsetDate: NSDate){
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        let notification: UILocalNotification = UILocalNotification()
+        notification.alertBody = "日の入り時刻です。空を見てみませんか？"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.timeZone = NSTimeZone.defaultTimeZone()
+        notification.fireDate = sunsetDate
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+        let calendar = NSCalendar.currentCalendar()
+        let comp = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: sunsetDate)
+        var dateStr: String
+        if(comp.minute < 10){
+            dateStr = "\(comp.year)/\(comp.month)/\(comp.day)-\(comp.hour):0\(comp.minute)"
+        } else {
+            dateStr = "\(comp.year)/\(comp.month)/\(comp.day)-\(comp.hour):\(comp.minute)"
+        }
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setObject(dateStr, forKey: "notifSetDate")
+        ud.synchronize()
+        print("setLocalNotif!")
     }
     
     func revGeocoding(location: CLLocation)
